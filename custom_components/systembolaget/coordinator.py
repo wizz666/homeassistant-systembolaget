@@ -192,11 +192,8 @@ class SystembolagetCoordinator(DataUpdateCoordinator):
                 today_hours = f"{open_from}–{open_to}" if open_from and open_to else "Stängt"
                 break
 
-        # is_open: use API value if present, otherwise compute from hours
-        api_open = s.get("isOpen") if s.get("isOpen") is not None else s.get("IsOpen")
-        if api_open is not None:
-            is_open = bool(api_open)
-        elif today_hours not in ("–", "Stängt"):
+        # is_open: prefer time-based calculation (API value is often stale/cached)
+        if today_hours not in ("–", "Stängt"):
             try:
                 tf = dtime(*[int(x) for x in today_hours.split("–")[0].split(":")])
                 tt = dtime(*[int(x) for x in today_hours.split("–")[1].split(":")])
