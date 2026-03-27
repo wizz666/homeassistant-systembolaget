@@ -1,0 +1,51 @@
+{
+  "config": {
+    "step": {
+      "user": {
+        "title": "Systembolaget — Hitta din butik",
+        "description": "Skriv in din stad för att hitta närmaste Systembolaget-butik. Ingen API-nyckel behövs.",
+        "data": {
+          "city": "Stad (ex. Stockholm, Göteborg, Malmö)"
+        }
+      },
+      "store": {
+        "title": "Välj butik",
+        "description": "Välj din Systembolaget-butik i listan nedan.",
+        "data": {
+          "store_id": "Butik"
+        }
+      },
+      "settings": {
+        "title": "Inställningar",
+        "description": "Bevaka specifika produkter och välj vilka kategorier som visas under Nyheter.\n\n**Hitta produkt-ID:** Gå till systembolaget.se, klicka på en produkt — ID:t är siffrorna i URL:en (ex. `/produkt/ol/norrlands-guld-2512/` → ID: `2512`).\n\nDu kan även använda tjänsten `systembolaget.search_product` i Home Assistant efter installationen.",
+        "data": {
+          "watched_products": "Bevakade produkt-ID:n (kommaseparerade, ex. 2512,7348)",
+          "categories": "Kategorier för Nyheter (kommaseparerade)",
+          "poll_interval": "Uppdateringsintervall (sekunder, rekommenderat: 3600)"
+        }
+      }
+    },
+    "error": {
+      "city_required": "Ange ett stadsnamn.",
+      "no_stores_found": "Inga butiker hittades i den staden. Prova en annan stavning.",
+      "store_required": "Välj en butik."
+    },
+    "abort": {
+      "single_instance_allowed": "Systembolaget är redan konfigurerat."
+    }
+  },
+  "options": {
+    "step": {
+      "init": {
+        "title": "Systembolaget — Inställningar",
+        "description": "**Hitta produkt-ID:** Gå till systembolaget.se och klicka på en produkt — siffrorna i URL:en är ID:t. Eller använd tjänsten `systembolaget.search_product`.",
+        "data": {
+          "store_id": "Butik-ID",
+          "watched_products": "Bevakade produkt-ID:n (kommaseparerade)",
+          "categories": "Kategorier för Nyheter (kommaseparerade)",
+          "poll_interval": "Uppdateringsintervall (sekunder)"
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,12 @@
+{
+  "domain": "systembolaget",
+  "name": "Systembolaget",
+  "codeowners": ["@wizz666"],
+  "config_flow": true,
+  "dependencies": [],
+  "documentation": "https://github.com/wizz666/homeassistant-systembolaget",
+  "iot_class": "cloud_polling",
+  "issue_tracker": "https://github.com/wizz666/homeassistant-systembolaget/issues",
+  "requirements": [],
+  "version": "1.0.0"
+}

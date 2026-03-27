@@ -1,0 +1,38 @@
+refresh:
+  name: Uppdatera
+  description: Hämtar ny data från Systembolaget omedelbart.
+  fields: {}
+
+search_product:
+  name: Sök produkt
+  description: Söker produkter på Systembolaget och visar resultat som ett HA-meddelande. Använd för att hitta produkt-ID:n.
+  fields:
+    query:
+      name: Sökterm
+      description: Produktnamn, producent eller liknande. Ex. "Absolut Vodka".
+      required: true
+      example: "Mackmyra"
+      selector:
+        text: {}
+    size:
+      name: Antal träffar
+      description: Max antal resultat (standard 10).
+      required: false
+      example: 10
+      selector:
+        number:
+          min: 1
+          max: 50
+          mode: box
+
+search_store:
+  name: Sök butik
+  description: Söker Systembolaget-butiker i en stad och visar butik-ID:n som ett HA-meddelande.
+  fields:
+    city:
+      name: Stad
+      description: Stadsnamn att söka i. Ex. "Stockholm", "Göteborg".
+      required: true
+      example: "Göteborg"
+      selector:
+        text: {}
