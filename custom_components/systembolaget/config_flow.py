@@ -155,6 +155,10 @@ class SystembolagetOptionsFlow(config_entries.OptionsFlow):
 
     async def async_step_init(self, user_input=None):
         if user_input is not None:
+            # Normalise watched products: strip spaces, remove empty entries
+            raw = user_input.get(CONF_WATCHED_PRODUCTS, "")
+            cleaned = ",".join(p.strip() for p in raw.split(",") if p.strip())
+            user_input[CONF_WATCHED_PRODUCTS] = cleaned
             return self.async_create_entry(title="", data=user_input)
 
         cur = {**self._entry.data, **self._entry.options}
@@ -162,8 +166,17 @@ class SystembolagetOptionsFlow(config_entries.OptionsFlow):
             step_id="init",
             data_schema=vol.Schema({
                 vol.Optional(CONF_STORE_ID, default=cur.get(CONF_STORE_ID, "")): str,
-                vol.Optional(CONF_WATCHED_PRODUCTS, default=cur.get(CONF_WATCHED_PRODUCTS, DEFAULT_WATCHED_PRODUCTS)): str,
+                vol.Optional(
+                    CONF_WATCHED_PRODUCTS,
+                    default=cur.get(CONF_WATCHED_PRODUCTS, DEFAULT_WATCHED_PRODUCTS),
+                    description={"suggested_value": cur.get(CONF_WATCHED_PRODUCTS, "")},
+                ): selector.selector({
+                    "text": {"multiline": False, "suffix": "kommaseparerade ID:n, t.ex. 77602,12345"}
+                }),
                 vol.Optional(CONF_CATEGORIES, default=cur.get(CONF_CATEGORIES, DEFAULT_CATEGORIES)): str,
                 vol.Optional(CONF_POLL_INTERVAL, default=int(cur.get(CONF_POLL_INTERVAL, DEFAULT_POLL_INTERVAL))): int,
             }),
+            description_placeholders={
+                "watched_help": "Ange ett eller flera produkt-ID:n från systembolaget.se, separerade med komma. Exempel: 77602,12345,98765"
+            },
         )

@@ -35,7 +35,7 @@ _BASE_HEADERS = {
 class SystembolagetCoordinator(DataUpdateCoordinator):
     """Fetches and caches Systembolaget data."""
 
-    def __init__(self, hass: HomeAssistant, entry: ConfigEntry) -> None:
+    def __init__(self, hass: HomeAssistant, entry: ConfigEntry, last_data: dict | None = None) -> None:
         interval = int(
             entry.options.get(CONF_POLL_INTERVAL)
             or entry.data.get(CONF_POLL_INTERVAL, DEFAULT_POLL_INTERVAL)
@@ -44,6 +44,9 @@ class SystembolagetCoordinator(DataUpdateCoordinator):
         self.entry = entry
         self._api_key: str = _FALLBACK_KEY
         self._key_fetched: datetime | None = None  # refresh key every 24h
+        # Carry over last known good data so sensors don't flash empty during reload
+        if last_data:
+            self.data = last_data
 
     # ── Helpers ──────────────────────────────────────────────────────────────
 
